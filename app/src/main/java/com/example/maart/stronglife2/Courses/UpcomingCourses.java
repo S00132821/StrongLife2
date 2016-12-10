@@ -22,7 +22,7 @@ public class UpcomingCourses extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_upcoming_classes);
+        setContentView(R.layout.activity_upcoming_courses);
 
         mBack = (Button) findViewById(R.id.backbtn);
         mList = (RecyclerView) findViewById(R.id.listView);

@@ -32,7 +32,7 @@ public class CoursesAdapter extends RecyclerView.Adapter<ViewMyCoursesHolder> {
     @Override
     public ViewMyCoursesHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.list_item_classes, parent, false);
+        View view = inflater.inflate(R.layout.list_item_courses, parent, false);
 
         return new ViewMyCoursesHolder(view);
     }
@@ -67,7 +67,7 @@ public class CoursesAdapter extends RecyclerView.Adapter<ViewMyCoursesHolder> {
 
                 try{
                     Log.d("COURSEADAPTER", "inserting course row");
-                    mDatabase.insert(StrongLifeDbSchema.MembershipTable.name, null, data);
+                    mDatabase.insert(StrongLifeDbSchema.CoursesTable.name, null, data);
 
                 }
                 catch (Exception e){

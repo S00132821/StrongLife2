@@ -32,17 +32,6 @@ public class Notifications extends AppCompatActivity {
         mList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
 
-        // Test Edit
-        ArrayAdapter<String> itemsAdapter =
-                new ArrayAdapter<String>(this, android.R.layout.notifications_list, listitems);
-
-
-        ListView listView = (ListView) findViewById(R.id.listView);
-        listView.setAdapter(itemsAdapter);
-
-
-
-
         final SQLiteDatabase mDatabase = new StrongLifeDbHelper(getApplicationContext()).getWritableDatabase();
 
         Cursor cursor = mDatabase.query(
