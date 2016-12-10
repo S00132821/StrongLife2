@@ -32,6 +32,7 @@ public class Notifications extends AppCompatActivity {
         mList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
 
+        // Test Edit
         ArrayAdapter<String> itemsAdapter =
                 new ArrayAdapter<String>(this, android.R.layout.notifications_list, listitems);
 
