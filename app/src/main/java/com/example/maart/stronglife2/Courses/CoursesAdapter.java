@@ -39,10 +39,10 @@ public class CoursesAdapter extends RecyclerView.Adapter<ViewMyCoursesHolder> {
 
     @Override
     public void onBindViewHolder(ViewMyCoursesHolder holder, int position) {
-        SingleCourse singleCourse = mList.get(position);
+        final SingleCourse singleCourse = mList.get(position);
 
-        holder.title.setText(singleCourse.getmClassName());
-        holder.date.setText(singleCourse.getmClassDate().toString());
+        holder.title.setText(singleCourse.getmCourseName());
+        holder.date.setText(singleCourse.getmCourseDate().toString());
 
         holder.signup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,21 +54,16 @@ public class CoursesAdapter extends RecyclerView.Adapter<ViewMyCoursesHolder> {
                 Toast.makeText(view.getContext(), "You've Signed up", Toast.LENGTH_LONG).show();
 
                 ContentValues data = new ContentValues();
-                Log.d("COURSEADAPTER", "creating course row");
+                Log.d("COURSEADAPTER", "creating mycourse row");
 
-                data.put(StrongLifeDbSchema.CoursesTable.Cols.COURSEID, 1);
-                data.put(StrongLifeDbSchema.CoursesTable.Cols.USERID, 1);
-                data.put(StrongLifeDbSchema.CoursesTable.Cols.COURSENAME, "Course Example" );
-                Log.d("COURSEADAPTER", "creating date for row");
-                Date today = new Date();
-                data.put(StrongLifeDbSchema.CoursesTable.Cols.TIME, today.toString());
-                Log.d("COURSEADAPTER", "creating coursedate for row");
-                data.put(StrongLifeDbSchema.CoursesTable.Cols.COURSEDATE, today.toString());
+                Date created = new Date();
+                data.put(StrongLifeDbSchema.MyCoursesTable.Cols.MYCOURSEID, 0);
+                data.put(StrongLifeDbSchema.MyCoursesTable.Cols.COURSEID, singleCourse.getmCourseId());
+                data.put(StrongLifeDbSchema.MyCoursesTable.Cols.CREATED, created.getTime());
 
                 try{
                     Log.d("COURSEADAPTER", "inserting course row");
-                    mDatabase.insert(StrongLifeDbSchema.CoursesTable.name, null, data);
-
+                    mDatabase.insert(StrongLifeDbSchema.MyCoursesTable.name, null, data);
                 }
                 catch (Exception e){
                     String error =  e.getMessage().toString();

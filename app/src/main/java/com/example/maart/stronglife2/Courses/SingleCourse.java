@@ -7,30 +7,30 @@ import java.util.Date;
  */
 public class SingleCourse {
 
-    private int mClassId;
-    private String mClassName;
+    private int mCourseId;
+    private String mCourseName;
     private Date mTime;
-    private Date mClassDate;
+    private Date mCourseDate;
     private int mUserId;
 
-    public SingleCourse(int classId, String className, Date time, Date classDate, int userId) {
-        mClassId = classId;
-        mClassName = className;
+    public SingleCourse(int courseId, String className, Date time, Date classDate, int userId) {
+        mCourseId = courseId;
+        mCourseName = className;
         mTime = time;
-        mClassDate = classDate;
+        mCourseDate = classDate;
         mUserId = userId;
     }
 
-    public int getmClassId() {
-        return mClassId;
+    public int getmCourseId() {
+        return mCourseId;
     }
 
-    public String getmClassName() {
-        return mClassName;
+    public String getmCourseName() {
+        return mCourseName;
     }
 
-    public void setmClassName(String mClassName) {
-        this.mClassName = mClassName;
+    public void setmCourseName(String mClassName) {
+        this.mCourseName = mClassName;
     }
 
     public Date getmTime() {
@@ -41,12 +41,12 @@ public class SingleCourse {
         this.mTime = mTime;
     }
 
-    public Date getmClassDate() {
-        return mClassDate;
+    public Date getmCourseDate() {
+        return mCourseDate;
     }
 
-    public void setmClassDate(Date mClassDate) {
-        this.mClassDate = mClassDate;
+    public void setmCourseDate(Date mClassDate) {
+        this.mCourseDate = mClassDate;
     }
 
     public int getmUserId() {

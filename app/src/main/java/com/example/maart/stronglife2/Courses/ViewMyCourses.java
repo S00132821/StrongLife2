@@ -39,16 +39,22 @@ public class ViewMyCourses extends AppCompatActivity {
 
 
         final SQLiteDatabase mDatabase = new StrongLifeDbHelper(getApplicationContext()).getWritableDatabase();
+//
+//        Cursor cursor = mDatabase.query(
+//                StrongLifeDbSchema.MyCoursesTable.name,
+//                null,
+//                null,
+//                null,
+//                null,
+//                null,
+//                null
+//        );
 
-        Cursor cursor = mDatabase.query(
-                StrongLifeDbSchema.CoursesTable.name,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-        );
+        Cursor cursor = mDatabase.rawQuery("select * from " + StrongLifeDbSchema.CoursesTable.name +
+                " where " + StrongLifeDbSchema.CoursesTable.Cols.COURSEID + " in " +
+                "(select " + StrongLifeDbSchema.MyCoursesTable.Cols.COURSEID +
+                " from " + StrongLifeDbSchema.MyCoursesTable.name + ")", new String[]{});
+
 
         List<String> classList = new ArrayList<String>();
 

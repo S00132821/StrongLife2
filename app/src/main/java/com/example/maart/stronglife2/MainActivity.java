@@ -80,6 +80,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        // Pretend fetch and fill from the internet
+
         final SQLiteDatabase mDatabase = new StrongLifeDbHelper(getApplicationContext()).getWritableDatabase();
 
         int count = 0;
@@ -94,8 +97,52 @@ public class MainActivity extends AppCompatActivity {
             count++;
         }
 
+        ContentValues user = new ContentValues();
 
+        user.put(StrongLifeDbSchema.UsersTable.Cols.USERID, 0);
+        user.put(StrongLifeDbSchema.UsersTable.Cols.FIRSTNAME, "John");
+        user.put(StrongLifeDbSchema.UsersTable.Cols.LASTNAME, "Smith");
+        user.put(StrongLifeDbSchema.UsersTable.Cols.ADDRESSLINE1, "Main Street");
+        user.put(StrongLifeDbSchema.UsersTable.Cols.CITY, "Galway");
+        user.put(StrongLifeDbSchema.UsersTable.Cols.COUNTY, "Galway");
+        user.put(StrongLifeDbSchema.UsersTable.Cols.ZIPCODE, "90210");
+        user.put(StrongLifeDbSchema.UsersTable.Cols.PHONENUMBER, "01 0123456");
+        user.put(StrongLifeDbSchema.UsersTable.Cols.ISSTUDENT, true);
+        user.put(StrongLifeDbSchema.UsersTable.Cols.EMAIL, "john@example.com");
+        user.put(StrongLifeDbSchema.UsersTable.Cols.PASSWORD, "examplePass");
 
+        mDatabase.insert(StrongLifeDbSchema.UsersTable.name, null, user);
+
+        ContentValues courseOne = new ContentValues();
+        ContentValues courseDetailOne = new ContentValues();
+        Date created = new Date();
+
+        courseOne.put(StrongLifeDbSchema.CoursesTable.Cols.COURSEID, 0);
+        courseOne.put(StrongLifeDbSchema.CoursesTable.Cols.COURSENAME, "Zumba Class");
+        courseOne.put(StrongLifeDbSchema.CoursesTable.Cols.USERID, 0);
+
+        courseDetailOne.put(StrongLifeDbSchema.CoursesDetailsTable.Cols.COURSEID, 0);
+        courseDetailOne.put(StrongLifeDbSchema.CoursesDetailsTable.Cols.COURSESDETAILSID, 0);
+        courseDetailOne.put(StrongLifeDbSchema.CoursesDetailsTable.Cols.DATEOFCOURSE, created.getTime());
+        courseDetailOne.put(StrongLifeDbSchema.CoursesDetailsTable.Cols.TIMEOFCOURSE, created.getTime());
+
+        mDatabase.insert(StrongLifeDbSchema.CoursesTable.name, null, courseOne);
+        mDatabase.insert(StrongLifeDbSchema.CoursesDetailsTable.name, null, courseDetailOne);
+
+        ContentValues courseTwo = new ContentValues();
+        ContentValues courseDetailTwo = new ContentValues();
+
+        courseTwo.put(StrongLifeDbSchema.CoursesTable.Cols.COURSEID, 1);
+        courseTwo.put(StrongLifeDbSchema.CoursesTable.Cols.COURSENAME, "Gym Class");
+        courseTwo.put(StrongLifeDbSchema.CoursesTable.Cols.USERID, 0);
+
+        courseDetailTwo.put(StrongLifeDbSchema.CoursesDetailsTable.Cols.COURSEID, 1);
+        courseDetailTwo.put(StrongLifeDbSchema.CoursesDetailsTable.Cols.COURSESDETAILSID, 1);
+        courseDetailTwo.put(StrongLifeDbSchema.CoursesDetailsTable.Cols.DATEOFCOURSE, created.getTime());
+        courseDetailTwo.put(StrongLifeDbSchema.CoursesDetailsTable.Cols.TIMEOFCOURSE, created.getTime());
+
+        mDatabase.insert(StrongLifeDbSchema.CoursesTable.name, null, courseTwo);
+        mDatabase.insert(StrongLifeDbSchema.CoursesDetailsTable.name, null, courseDetailTwo);
 
     }
 }

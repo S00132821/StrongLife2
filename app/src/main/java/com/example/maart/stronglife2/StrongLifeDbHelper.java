@@ -31,8 +31,8 @@ public class StrongLifeDbHelper extends SQLiteOpenHelper {
                 UsersTable.Cols.ADDRESSLINE1 + " VARCHAR(255), " +
                 UsersTable.Cols.CITY + " VARCHAR(100), " +
                 UsersTable.Cols.COUNTY + " VARCHAR(100), " +
-                UsersTable.Cols.ZIPCODE + " INTEGER, " +
-                UsersTable.Cols.PHONENUMBER + " INTEGER, " +
+                UsersTable.Cols.ZIPCODE + " VARCHAR(50), " +
+                UsersTable.Cols.PHONENUMBER + " VARCHAR(40), " +
                 UsersTable.Cols.EMAIL + " VARCHAR(100), " +
                 UsersTable.Cols.PASSWORD + " CHAR(100), " +
                 UsersTable.Cols.ISSTUDENT + " BOOLEAN)");
@@ -52,8 +52,6 @@ public class StrongLifeDbHelper extends SQLiteOpenHelper {
                 " _id integer primary key autoincrement, " +
                 CoursesTable.Cols.COURSEID + " INTEGER, " +
                 CoursesTable.Cols.COURSENAME + " VARCHAR(255), " +
-                CoursesTable.Cols.COURSEDATE + " DATE, " +
-                CoursesTable.Cols.TIME + " DATETIME, " +
                 CoursesTable.Cols.USERID + " INTEGER, " +
                 "FOREIGN KEY(" + CoursesTable.Cols.USERID + ") REFERENCES " + UsersTable.name + "(id) )");
 
@@ -61,7 +59,6 @@ public class StrongLifeDbHelper extends SQLiteOpenHelper {
         db.execSQL("create table " + CoursesDetailsTable.name + "(" +
                 " _id integer primary key autoincrement, " +
                 CoursesDetailsTable.Cols.COURSEID + " INTEGER, " +
-                CoursesDetailsTable.Cols.NAMEOFCOURSE + " VARCHAR(255), " +
                 CoursesDetailsTable.Cols.DATEOFCOURSE + " DATE, " +
                 CoursesDetailsTable.Cols.TIMEOFCOURSE + " DATETIME, " +
                 CoursesDetailsTable.Cols.COURSESDETAILSID + " INTEGER )");
@@ -73,8 +70,13 @@ public class StrongLifeDbHelper extends SQLiteOpenHelper {
                 NotificationsTable.Cols.CREATED + " DATE, " +
                 NotificationsTable.Cols.CHECKED + " BOOLEAN )");
 
-
-
+        db.execSQL("create table " + MyCoursesTable.name + "(" +
+                " _id integer primary key autoincrement, " +
+                MyCoursesTable.Cols.MYCOURSEID + " INTEGER, " +
+                MyCoursesTable.Cols.CREATED + " DATE, " +
+                MyCoursesTable.Cols.COURSEID + " INTEGER, " +
+                "FOREIGN KEY(" + MyCoursesTable.Cols.COURSEID + ") REFERENCES " +
+                    CoursesTable.name + "(id) )");
 
     }
 

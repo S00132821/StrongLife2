@@ -49,8 +49,6 @@ public class StrongLifeDbSchema {
 
             public static final String COURSEID = "courseid";
             public static final String COURSENAME = "coursename"; //varchar or string
-            public static final String TIME = "time";
-            public static final String COURSEDATE = "coursedate";
             public static final String USERID = "userid"; //foreign key
         }
     }
@@ -62,7 +60,6 @@ public class StrongLifeDbSchema {
         public static final class Cols {
 
             public static final String COURSEID = "courseid";
-            public static final String NAMEOFCOURSE = "nameofcourse"; //varchar or string
             public static final String TIMEOFCOURSE = "timeofcourse";
             public static final String DATEOFCOURSE = "dateofcourse";
             public static final String COURSESDETAILSID = "coursesdetailsid";
@@ -79,6 +76,18 @@ public class StrongLifeDbSchema {
             public static final String NOTIFICATIONTITLE = "notificationtitle"; //varchar or string
             public static final String CREATED = "created"; //created at date
             public static final String CHECKED = "checked"; //bool
+        }
+    }
+
+    public static final class MyCoursesTable {
+
+        public static final String name = "mycourses";
+
+        public static final class Cols {
+
+            public static final String MYCOURSEID = "mycourseid"; // int
+            public static final String COURSEID = "courseid"; // foreign key int
+            public static final String CREATED = "created"; // date
         }
     }
 

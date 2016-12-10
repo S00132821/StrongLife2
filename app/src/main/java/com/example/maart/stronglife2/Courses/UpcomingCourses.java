@@ -1,13 +1,18 @@
 package com.example.maart.stronglife2.Courses;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.example.maart.stronglife2.R;
+import com.example.maart.stronglife2.StrongLifeDbHelper;
+import com.example.maart.stronglife2.StrongLifeDbSchema;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,15 +34,40 @@ public class UpcomingCourses extends AppCompatActivity {
 
         mList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
-        List<SingleCourse> classList = new ArrayList<SingleCourse>();
+        List<SingleCourse> courseList = new ArrayList<SingleCourse>();
 
-        for (int i = 0; i < 20; i++) {
-            SingleCourse singleCourse = new SingleCourse(i, "Class #" + i, new Date(), new Date(), 1);
-            classList.add(singleCourse);
+        final SQLiteDatabase mDatabase = new StrongLifeDbHelper(getApplicationContext()).getWritableDatabase();
+        Cursor cursor = mDatabase.query(
+                StrongLifeDbSchema.CoursesTable.name,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+
+        try {
+            if (cursor.getCount() == 0) {
+            } else {
+                cursor.moveToFirst();
+                while ( !cursor.isAfterLast()) {
+                    String courseTitle = cursor.getString(
+                            cursor.getColumnIndex(StrongLifeDbSchema.CoursesTable.Cols.COURSENAME)
+                    );
+
+                    SingleCourse singleCourse = new SingleCourse(0, courseTitle, new Date(), new Date(), 1);
+
+                    courseList.add(singleCourse);
+                    cursor.moveToNext();
+                }
+            }
+
+        } finally {
+            cursor.close();
         }
 
-
-        CoursesAdapter mAdapter = new CoursesAdapter(classList, getApplicationContext()); // List of info from database
+        CoursesAdapter mAdapter = new CoursesAdapter(courseList, getApplicationContext()); // List of info from database
         mList.setAdapter(mAdapter);
 
         mBack.setOnClickListener(new View.OnClickListener(){
