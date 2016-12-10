@@ -22,6 +22,8 @@ public class ViewMyCourses extends AppCompatActivity {
     private Button mBack;
     private RecyclerView mList;
 
+    final static String VIEWMYCOURSESTAG = "COURSEADAPTER";
+
 
 
     @Override
@@ -52,14 +54,17 @@ public class ViewMyCourses extends AppCompatActivity {
 
         try {
             if (cursor.getCount() == 0) {
-                Log.d("COURSEADAPTER", "Found no values");
+                Log.d(VIEWMYCOURSESTAG, "Found no values");
             } else {
                 cursor.moveToFirst();
-                String className = cursor.getString(
-                        cursor.getColumnIndex(StrongLifeDbSchema.CoursesTable.Cols.COURSENAME)
-                );
-                Log.d("COURSEADAPTER", className);
-                classList.add(className);
+                while ( !cursor.isAfterLast()) {
+                    String className = cursor.getString(
+                            cursor.getColumnIndex(StrongLifeDbSchema.CoursesTable.Cols.COURSENAME)
+                    );
+                    Log.d(VIEWMYCOURSESTAG, className);
+                    classList.add(className);
+                    cursor.moveToNext();
+                }
             }
 
         } finally {
