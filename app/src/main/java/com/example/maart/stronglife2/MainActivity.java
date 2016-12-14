@@ -100,88 +100,103 @@ public class MainActivity extends AppCompatActivity {
             count++;
         }
 
+        String userStatement = "select 1 from " +
+                StrongLifeDbSchema.UsersTable.name;
+        Cursor cursorUsers = mDatabase.rawQuery(userStatement,
+                new String[] { });
 
-        //USER
-        ContentValues user = new ContentValues();
+        boolean userExists = cursorUsers.getCount() > 0;
 
-        user.put(StrongLifeDbSchema.UsersTable.Cols.USERID, 0);
-        user.put(StrongLifeDbSchema.UsersTable.Cols.FIRSTNAME, "John");
-        user.put(StrongLifeDbSchema.UsersTable.Cols.LASTNAME, "Smith");
-        user.put(StrongLifeDbSchema.UsersTable.Cols.ADDRESSLINE1, "Main Street");
-        user.put(StrongLifeDbSchema.UsersTable.Cols.CITY, "Galway");
-        user.put(StrongLifeDbSchema.UsersTable.Cols.COUNTY, "Galway");
-        user.put(StrongLifeDbSchema.UsersTable.Cols.ZIPCODE, "90210");
-        user.put(StrongLifeDbSchema.UsersTable.Cols.PHONENUMBER, "01 0123456");
-        user.put(StrongLifeDbSchema.UsersTable.Cols.ISSTUDENT, true);
-        user.put(StrongLifeDbSchema.UsersTable.Cols.EMAIL, "john@example.com");
-        user.put(StrongLifeDbSchema.UsersTable.Cols.PASSWORD, "examplePass");
+        if ( !userExists ) {
+            //USER
+            ContentValues user = new ContentValues();
 
-        mDatabase.insert(StrongLifeDbSchema.UsersTable.name, null, user);
+            user.put(StrongLifeDbSchema.UsersTable.Cols.USERID, 0);
+            user.put(StrongLifeDbSchema.UsersTable.Cols.FIRSTNAME, "John");
+            user.put(StrongLifeDbSchema.UsersTable.Cols.LASTNAME, "Smith");
+            user.put(StrongLifeDbSchema.UsersTable.Cols.ADDRESSLINE1, "Main Street");
+            user.put(StrongLifeDbSchema.UsersTable.Cols.CITY, "Galway");
+            user.put(StrongLifeDbSchema.UsersTable.Cols.COUNTY, "Galway");
+            user.put(StrongLifeDbSchema.UsersTable.Cols.ZIPCODE, "90210");
+            user.put(StrongLifeDbSchema.UsersTable.Cols.PHONENUMBER, "01 0123456");
+            user.put(StrongLifeDbSchema.UsersTable.Cols.ISSTUDENT, true);
+            user.put(StrongLifeDbSchema.UsersTable.Cols.EMAIL, "john@example.com");
+            user.put(StrongLifeDbSchema.UsersTable.Cols.PASSWORD, "examplePass");
 
-
-
-        //COURSE ONE
-        ContentValues courseOne = new ContentValues();
-        ContentValues courseDetailOne = new ContentValues();
-        Date created = new Date();
-
-        courseOne.put(StrongLifeDbSchema.CoursesTable.Cols.COURSEID, 0);
-        courseOne.put(StrongLifeDbSchema.CoursesTable.Cols.COURSENAME, "Zumba Class");
-        courseOne.put(StrongLifeDbSchema.CoursesTable.Cols.USERID, 0);
-
-        courseDetailOne.put(StrongLifeDbSchema.CoursesDetailsTable.Cols.COURSEID, 0);
-        courseDetailOne.put(StrongLifeDbSchema.CoursesDetailsTable.Cols.COURSESDETAILSID, 0);
-        courseDetailOne.put(StrongLifeDbSchema.CoursesDetailsTable.Cols.DATEOFCOURSE, created.getTime());
-        courseDetailOne.put(StrongLifeDbSchema.CoursesDetailsTable.Cols.TIMEOFCOURSE, created.getTime());
-
-        mDatabase.insert(StrongLifeDbSchema.CoursesTable.name, null, courseOne);
-        mDatabase.insert(StrongLifeDbSchema.CoursesDetailsTable.name, null, courseDetailOne);
+            mDatabase.insert(StrongLifeDbSchema.UsersTable.name, null, user);
+        }
 
 
-        //COURSE TWO
-        ContentValues courseTwo = new ContentValues();
-        ContentValues courseDetailTwo = new ContentValues();
+        String courseStatement = "select 1 from " +
+                StrongLifeDbSchema.CoursesTable.name;
+        Cursor cursorCourses = mDatabase.rawQuery(courseStatement,
+                new String[] { });
 
-        courseTwo.put(StrongLifeDbSchema.CoursesTable.Cols.COURSEID, 1);
-        courseTwo.put(StrongLifeDbSchema.CoursesTable.Cols.COURSENAME, "Kettlebell Class");
-        courseTwo.put(StrongLifeDbSchema.CoursesTable.Cols.USERID, 0);
+        boolean coursesExists = cursorCourses.getCount() > 0;
+        if ( !coursesExists ) {
+            //COURSE ONE
+            ContentValues courseOne = new ContentValues();
+            ContentValues courseDetailOne = new ContentValues();
+            Date created = new Date();
 
-        courseDetailTwo.put(StrongLifeDbSchema.CoursesDetailsTable.Cols.COURSEID, 1);
-        courseDetailTwo.put(StrongLifeDbSchema.CoursesDetailsTable.Cols.COURSESDETAILSID, 1);
-        courseDetailTwo.put(StrongLifeDbSchema.CoursesDetailsTable.Cols.DATEOFCOURSE, created.getTime());
-        courseDetailTwo.put(StrongLifeDbSchema.CoursesDetailsTable.Cols.TIMEOFCOURSE, created.getTime());
+            courseOne.put(StrongLifeDbSchema.CoursesTable.Cols.COURSEID, 0);
+            courseOne.put(StrongLifeDbSchema.CoursesTable.Cols.COURSENAME, "Zumba Class");
+            courseOne.put(StrongLifeDbSchema.CoursesTable.Cols.USERID, 0);
 
-        mDatabase.insert(StrongLifeDbSchema.CoursesTable.name, null, courseTwo);
-        mDatabase.insert(StrongLifeDbSchema.CoursesDetailsTable.name, null, courseDetailTwo);
+            courseDetailOne.put(StrongLifeDbSchema.CoursesDetailsTable.Cols.COURSEID, 0);
+            courseDetailOne.put(StrongLifeDbSchema.CoursesDetailsTable.Cols.COURSESDETAILSID, 0);
+            courseDetailOne.put(StrongLifeDbSchema.CoursesDetailsTable.Cols.DATEOFCOURSE, created.getTime());
+            courseDetailOne.put(StrongLifeDbSchema.CoursesDetailsTable.Cols.TIMEOFCOURSE, created.getTime());
+
+            mDatabase.insert(StrongLifeDbSchema.CoursesTable.name, null, courseOne);
+            mDatabase.insert(StrongLifeDbSchema.CoursesDetailsTable.name, null, courseDetailOne);
 
 
-        //COURSE THREE
-        ContentValues courseThree = new ContentValues();
-        ContentValues courseDetailThree = new ContentValues();
+            //COURSE TWO
+            ContentValues courseTwo = new ContentValues();
+            ContentValues courseDetailTwo = new ContentValues();
 
-        courseThree.put(StrongLifeDbSchema.CoursesTable.Cols.COURSEID, 2);
-        courseThree.put(StrongLifeDbSchema.CoursesTable.Cols.COURSENAME, "Weightlifting Class");
-        courseTwo.put(StrongLifeDbSchema.CoursesTable.Cols.USERID, 0);
+            courseTwo.put(StrongLifeDbSchema.CoursesTable.Cols.COURSEID, 1);
+            courseTwo.put(StrongLifeDbSchema.CoursesTable.Cols.COURSENAME, "Kettlebell Class");
+            courseTwo.put(StrongLifeDbSchema.CoursesTable.Cols.USERID, 0);
 
-        courseDetailThree.put(StrongLifeDbSchema.CoursesDetailsTable.Cols.COURSEID, 2);
-        courseDetailThree.put(StrongLifeDbSchema.CoursesDetailsTable.Cols.COURSESDETAILSID, 2);
-        courseDetailThree.put(StrongLifeDbSchema.CoursesDetailsTable.Cols.DATEOFCOURSE, created.getTime());
-        courseDetailThree.put(StrongLifeDbSchema.CoursesDetailsTable.Cols.TIMEOFCOURSE, created.getTime());
+            courseDetailTwo.put(StrongLifeDbSchema.CoursesDetailsTable.Cols.COURSEID, 1);
+            courseDetailTwo.put(StrongLifeDbSchema.CoursesDetailsTable.Cols.COURSESDETAILSID, 1);
+            courseDetailTwo.put(StrongLifeDbSchema.CoursesDetailsTable.Cols.DATEOFCOURSE, created.getTime());
+            courseDetailTwo.put(StrongLifeDbSchema.CoursesDetailsTable.Cols.TIMEOFCOURSE, created.getTime());
 
-        mDatabase.insert(StrongLifeDbSchema.CoursesTable.name, null, courseThree);
-        mDatabase.insert(StrongLifeDbSchema.CoursesDetailsTable.name, null, courseDetailThree);
+            mDatabase.insert(StrongLifeDbSchema.CoursesTable.name, null, courseTwo);
+            mDatabase.insert(StrongLifeDbSchema.CoursesDetailsTable.name, null, courseDetailTwo);
+
+
+            //COURSE THREE
+            ContentValues courseThree = new ContentValues();
+            ContentValues courseDetailThree = new ContentValues();
+
+            courseThree.put(StrongLifeDbSchema.CoursesTable.Cols.COURSEID, 2);
+            courseThree.put(StrongLifeDbSchema.CoursesTable.Cols.COURSENAME, "Weightlifting Class");
+            courseTwo.put(StrongLifeDbSchema.CoursesTable.Cols.USERID, 0);
+
+            courseDetailThree.put(StrongLifeDbSchema.CoursesDetailsTable.Cols.COURSEID, 2);
+            courseDetailThree.put(StrongLifeDbSchema.CoursesDetailsTable.Cols.COURSESDETAILSID, 2);
+            courseDetailThree.put(StrongLifeDbSchema.CoursesDetailsTable.Cols.DATEOFCOURSE, created.getTime());
+            courseDetailThree.put(StrongLifeDbSchema.CoursesDetailsTable.Cols.TIMEOFCOURSE, created.getTime());
+
+            mDatabase.insert(StrongLifeDbSchema.CoursesTable.name, null, courseThree);
+            mDatabase.insert(StrongLifeDbSchema.CoursesDetailsTable.name, null, courseDetailThree);
+        }
 
         //check if course already exists / is signed up for, if so do not add anything to list.
         //if not signed up for, it runs normally and adds to list
 
-    //ASK IF IF-ELSE STATEMENT IS REQUIRED
-        public boolean Exists(String id) {
-            Cursor cursor = StrongLifeDbSchema.rawQuery("select id from CoursesTable where id=%s",
-                    new String[] { id });
-            boolean exists = (cursor.getCount() > 0);
-            cursor.close();
-            return exists;
-        }
+//    //ASK IF IF-ELSE STATEMENT IS REQUIRED
+//        public boolean Exists(String id) {
+//            Cursor cursor = StrongLifeDbSchema.rawQuery("select id from CoursesTable where id=%s",
+//                    new String[] { id });
+//            boolean exists = (cursor.getCount() > 0);
+//            cursor.close();
+//            return exists;
+//        }
 
     }
 }

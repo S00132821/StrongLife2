@@ -60,7 +60,7 @@ public class UpcomingCourses extends AppCompatActivity {
                     Integer courseId = cursor.getInt
                             (cursor.getColumnIndex(StrongLifeDbSchema.CoursesTable.Cols.COURSEID));
 
-                    SingleCourse singleCourse = new SingleCourse(0, courseTitle, new Date(), new Date(), 1);
+                    SingleCourse singleCourse = new SingleCourse(courseId, courseTitle, new Date(), new Date(), 1);
 
                     courseList.add(singleCourse);
                     cursor.moveToNext();

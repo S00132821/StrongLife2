@@ -52,14 +52,14 @@ public class CoursesAdapter extends RecyclerView.Adapter<ViewMyCoursesHolder> {
                 // to signup them up to the list of classes
                 final SQLiteDatabase mDatabase = new StrongLifeDbHelper(mContext).getWritableDatabase();
 
-                Toast.makeText(view.getContext(), "You've Signed up", Toast.LENGTH_LONG).show();
 
                 ContentValues data = new ContentValues();
                 Log.d("COURSEADAPTER", "creating mycourse row");
 
-                Cursor cursorMyCourses = mDatabase.rawQuery("select 1 from " +
+                String statement = "select 1 from " +
                         StrongLifeDbSchema.MyCoursesTable.name +
-                    "where " + StrongLifeDbSchema.MyCoursesTable.Cols.COURSEID + "=%s",
+                    " where " + StrongLifeDbSchema.MyCoursesTable.Cols.COURSEID + "=?";
+                Cursor cursorMyCourses = mDatabase.rawQuery(statement,
                         new String[] { Integer.toString(singleCourse.getmCourseId()) });
 
 
@@ -73,9 +73,12 @@ public class CoursesAdapter extends RecyclerView.Adapter<ViewMyCoursesHolder> {
                     try {
                         Log.d("COURSEADAPTER", "inserting course row");
                         mDatabase.insert(StrongLifeDbSchema.MyCoursesTable.name, null, data);
+                        Toast.makeText(view.getContext(), "You've Signed up", Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
                         String error = e.getMessage().toString();
                     }
+                } else {
+                    Toast.makeText(view.getContext(), "Your already signed up", Toast.LENGTH_LONG).show();
                 }
 
                 cursorMyCourses.close();
