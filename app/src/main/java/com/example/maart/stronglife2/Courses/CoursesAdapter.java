@@ -3,6 +3,7 @@ package com.example.maart.stronglife2.Courses;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -56,18 +57,28 @@ public class CoursesAdapter extends RecyclerView.Adapter<ViewMyCoursesHolder> {
                 ContentValues data = new ContentValues();
                 Log.d("COURSEADAPTER", "creating mycourse row");
 
-                Date created = new Date();
-                data.put(StrongLifeDbSchema.MyCoursesTable.Cols.MYCOURSEID, 0);
-                data.put(StrongLifeDbSchema.MyCoursesTable.Cols.COURSEID, singleCourse.getmCourseId());
-                data.put(StrongLifeDbSchema.MyCoursesTable.Cols.CREATED, created.getTime());
+                Cursor cursorMyCourses = mDatabase.rawQuery("select 1 from " +
+                        StrongLifeDbSchema.MyCoursesTable.name +
+                    "where " + StrongLifeDbSchema.MyCoursesTable.Cols.COURSEID + "=%s",
+                        new String[] { Integer.toString(singleCourse.getmCourseId()) });
 
-                try{
-                    Log.d("COURSEADAPTER", "inserting course row");
-                    mDatabase.insert(StrongLifeDbSchema.MyCoursesTable.name, null, data);
+
+                boolean exists = cursorMyCourses.getCount() > 0;
+                if ( !exists ) {
+                    Date created = new Date();
+                    data.put(StrongLifeDbSchema.MyCoursesTable.Cols.MYCOURSEID, 0);
+                    data.put(StrongLifeDbSchema.MyCoursesTable.Cols.COURSEID, singleCourse.getmCourseId());
+                    data.put(StrongLifeDbSchema.MyCoursesTable.Cols.CREATED, created.getTime());
+
+                    try {
+                        Log.d("COURSEADAPTER", "inserting course row");
+                        mDatabase.insert(StrongLifeDbSchema.MyCoursesTable.name, null, data);
+                    } catch (Exception e) {
+                        String error = e.getMessage().toString();
+                    }
                 }
-                catch (Exception e){
-                    String error =  e.getMessage().toString();
-                }
+
+                cursorMyCourses.close();
             }
         });
     }

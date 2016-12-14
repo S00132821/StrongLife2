@@ -60,17 +60,6 @@ public class UpcomingCourses extends AppCompatActivity {
                     Integer courseId = cursor.getInt
                             (cursor.getColumnIndex(StrongLifeDbSchema.CoursesTable.Cols.COURSEID));
 
-                    //check for proper ID, if ID of the course is already checked, do not re-add course
-                    if (courseId.equals())
-                    {
-
-                    }
-                    else
-                    {
-
-                    }
-
-
                     SingleCourse singleCourse = new SingleCourse(0, courseTitle, new Date(), new Date(), 1);
 
                     courseList.add(singleCourse);
