@@ -2,6 +2,7 @@ package com.example.maart.stronglife2;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +15,8 @@ import com.example.maart.stronglife2.Courses.UpcomingCourses;
 import com.example.maart.stronglife2.Courses.ViewMyCourses;
 
 import java.util.Date;
+
+import static android.R.attr.id;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -97,6 +100,8 @@ public class MainActivity extends AppCompatActivity {
             count++;
         }
 
+
+        //USER
         ContentValues user = new ContentValues();
 
         user.put(StrongLifeDbSchema.UsersTable.Cols.USERID, 0);
@@ -113,6 +118,9 @@ public class MainActivity extends AppCompatActivity {
 
         mDatabase.insert(StrongLifeDbSchema.UsersTable.name, null, user);
 
+
+
+        //COURSE ONE
         ContentValues courseOne = new ContentValues();
         ContentValues courseDetailOne = new ContentValues();
         Date created = new Date();
@@ -129,11 +137,13 @@ public class MainActivity extends AppCompatActivity {
         mDatabase.insert(StrongLifeDbSchema.CoursesTable.name, null, courseOne);
         mDatabase.insert(StrongLifeDbSchema.CoursesDetailsTable.name, null, courseDetailOne);
 
+
+        //COURSE TWO
         ContentValues courseTwo = new ContentValues();
         ContentValues courseDetailTwo = new ContentValues();
 
         courseTwo.put(StrongLifeDbSchema.CoursesTable.Cols.COURSEID, 1);
-        courseTwo.put(StrongLifeDbSchema.CoursesTable.Cols.COURSENAME, "Gym Class");
+        courseTwo.put(StrongLifeDbSchema.CoursesTable.Cols.COURSENAME, "Kettlebell Class");
         courseTwo.put(StrongLifeDbSchema.CoursesTable.Cols.USERID, 0);
 
         courseDetailTwo.put(StrongLifeDbSchema.CoursesDetailsTable.Cols.COURSEID, 1);
@@ -143,6 +153,35 @@ public class MainActivity extends AppCompatActivity {
 
         mDatabase.insert(StrongLifeDbSchema.CoursesTable.name, null, courseTwo);
         mDatabase.insert(StrongLifeDbSchema.CoursesDetailsTable.name, null, courseDetailTwo);
+
+
+        //COURSE THREE
+        ContentValues courseThree = new ContentValues();
+        ContentValues courseDetailThree = new ContentValues();
+
+        courseThree.put(StrongLifeDbSchema.CoursesTable.Cols.COURSEID, 2);
+        courseThree.put(StrongLifeDbSchema.CoursesTable.Cols.COURSENAME, "Weightlifting Class");
+        courseTwo.put(StrongLifeDbSchema.CoursesTable.Cols.USERID, 0);
+
+        courseDetailThree.put(StrongLifeDbSchema.CoursesDetailsTable.Cols.COURSEID, 2);
+        courseDetailThree.put(StrongLifeDbSchema.CoursesDetailsTable.Cols.COURSESDETAILSID, 2);
+        courseDetailThree.put(StrongLifeDbSchema.CoursesDetailsTable.Cols.DATEOFCOURSE, created.getTime());
+        courseDetailThree.put(StrongLifeDbSchema.CoursesDetailsTable.Cols.TIMEOFCOURSE, created.getTime());
+
+        mDatabase.insert(StrongLifeDbSchema.CoursesTable.name, null, courseThree);
+        mDatabase.insert(StrongLifeDbSchema.CoursesDetailsTable.name, null, courseDetailThree);
+
+        //check if course already exists / is signed up for, if so do not add anything to list.
+        //if not signed up for, it runs normally and adds to list
+
+    //ASK IF IF-ELSE STATEMENT IS REQUIRED
+        public boolean Exists(String id) {
+            Cursor cursor = StrongLifeDbSchema.rawQuery("select id from CoursesTable where id=%s",
+                    new String[] { id });
+            boolean exists = (cursor.getCount() > 0);
+            cursor.close();
+            return exists;
+        }
 
     }
 }

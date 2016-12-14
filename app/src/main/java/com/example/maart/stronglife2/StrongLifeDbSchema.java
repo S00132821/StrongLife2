@@ -66,6 +66,19 @@ public class StrongLifeDbSchema {
         }
     }
 
+    public static final class MyCoursesTable{
+        public static final String name = "mycourses";
+
+        public static final class Cols
+        {
+            public static final String MYCOURSEID = "mycourseid"; //int
+            public static final String COURSEID = "courseid"; //foreign key int
+            public static final String CREATED = "created"; //date
+        }
+
+    }
+
+
     public static final class NotificationsTable {
 
         public static final String name = "notifications";
@@ -79,16 +92,5 @@ public class StrongLifeDbSchema {
         }
     }
 
-    public static final class MyCoursesTable {
-
-        public static final String name = "mycourses";
-
-        public static final class Cols {
-
-            public static final String MYCOURSEID = "mycourseid"; // int
-            public static final String COURSEID = "courseid"; // foreign key int
-            public static final String CREATED = "created"; // date
-        }
-    }
 
 }
