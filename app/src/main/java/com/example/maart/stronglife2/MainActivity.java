@@ -86,18 +86,37 @@ public class MainActivity extends AppCompatActivity {
 
         // Pretend fetch and fill from the internet
 
+        Date created = new Date();
         final SQLiteDatabase mDatabase = new StrongLifeDbHelper(getApplicationContext()).getWritableDatabase();
 
-        int count = 0;
-        while ( count < 10 ) {
-            ContentValues values = new ContentValues();
-            Date created = new Date();
-            values.put(StrongLifeDbSchema.NotificationsTable.Cols.NOTIFICATIONTITLE, "Notification #" + Integer.toString(count));
-            values.put(StrongLifeDbSchema.NotificationsTable.Cols.CREATED, created.getTime());
-            values.put(StrongLifeDbSchema.NotificationsTable.Cols.CHECKED, 0); //1 = true, 0 = false.
-            values.put(StrongLifeDbSchema.NotificationsTable.Cols.NOTIFICATIONID, count);
-            mDatabase.insert(StrongLifeDbSchema.NotificationsTable.name, null, values );
-            count++;
+        String notificationStatement = "select 1 from " +
+                StrongLifeDbSchema.NotificationsTable.name;
+        Cursor cursorNotifications = mDatabase.rawQuery(notificationStatement,
+                new String[] { });
+
+        boolean notificationsExists = cursorNotifications.getCount() > 0;
+
+        if ( !notificationsExists ) {
+            ContentValues notificationOne = new ContentValues();
+            notificationOne.put(StrongLifeDbSchema.NotificationsTable.Cols.NOTIFICATIONTITLE, "New Zumba Course Up and Coming");
+            notificationOne.put(StrongLifeDbSchema.NotificationsTable.Cols.CREATED, created.getTime());
+            notificationOne.put(StrongLifeDbSchema.NotificationsTable.Cols.CHECKED, 0); //1 = true, 0 = false.
+            notificationOne.put(StrongLifeDbSchema.NotificationsTable.Cols.NOTIFICATIONID, 1);
+            mDatabase.insert(StrongLifeDbSchema.NotificationsTable.name, null, notificationOne);
+
+            ContentValues notificationTwo = new ContentValues();
+            notificationTwo.put(StrongLifeDbSchema.NotificationsTable.Cols.NOTIFICATIONTITLE, "New Gym Class Course");
+            notificationTwo.put(StrongLifeDbSchema.NotificationsTable.Cols.CREATED, created.getTime());
+            notificationTwo.put(StrongLifeDbSchema.NotificationsTable.Cols.CHECKED, 0); //1 = true, 0 = false.
+            notificationTwo.put(StrongLifeDbSchema.NotificationsTable.Cols.NOTIFICATIONID, 1);
+            mDatabase.insert(StrongLifeDbSchema.NotificationsTable.name, null, notificationTwo);
+
+            ContentValues notificationThree = new ContentValues();
+            notificationThree.put(StrongLifeDbSchema.NotificationsTable.Cols.NOTIFICATIONTITLE, "50% offer on all new sign ups in January");
+            notificationThree.put(StrongLifeDbSchema.NotificationsTable.Cols.CREATED, created.getTime());
+            notificationThree.put(StrongLifeDbSchema.NotificationsTable.Cols.CHECKED, 0); //1 = true, 0 = false.
+            notificationThree.put(StrongLifeDbSchema.NotificationsTable.Cols.NOTIFICATIONID, 1);
+            mDatabase.insert(StrongLifeDbSchema.NotificationsTable.name, null, notificationThree);
         }
 
         String userStatement = "select 1 from " +
@@ -137,7 +156,6 @@ public class MainActivity extends AppCompatActivity {
             //COURSE ONE
             ContentValues courseOne = new ContentValues();
             ContentValues courseDetailOne = new ContentValues();
-            Date created = new Date();
 
             courseOne.put(StrongLifeDbSchema.CoursesTable.Cols.COURSEID, 0);
             courseOne.put(StrongLifeDbSchema.CoursesTable.Cols.COURSENAME, "Zumba Class");
@@ -185,18 +203,6 @@ public class MainActivity extends AppCompatActivity {
             mDatabase.insert(StrongLifeDbSchema.CoursesTable.name, null, courseThree);
             mDatabase.insert(StrongLifeDbSchema.CoursesDetailsTable.name, null, courseDetailThree);
         }
-
-        //check if course already exists / is signed up for, if so do not add anything to list.
-        //if not signed up for, it runs normally and adds to list
-
-//    //ASK IF IF-ELSE STATEMENT IS REQUIRED
-//        public boolean Exists(String id) {
-//            Cursor cursor = StrongLifeDbSchema.rawQuery("select id from CoursesTable where id=%s",
-//                    new String[] { id });
-//            boolean exists = (cursor.getCount() > 0);
-//            cursor.close();
-//            return exists;
-//        }
 
     }
 }
