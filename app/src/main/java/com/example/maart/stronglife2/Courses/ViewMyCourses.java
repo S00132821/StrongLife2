@@ -15,6 +15,7 @@ import com.example.maart.stronglife2.StrongLifeDbHelper;
 import com.example.maart.stronglife2.StrongLifeDbSchema;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ViewMyCourses extends AppCompatActivity {
@@ -39,16 +40,6 @@ public class ViewMyCourses extends AppCompatActivity {
 
 
         final SQLiteDatabase mDatabase = new StrongLifeDbHelper(getApplicationContext()).getWritableDatabase();
-//
-//        Cursor cursor = mDatabase.query(
-//                StrongLifeDbSchema.MyCoursesTable.name,
-//                null,
-//                null,
-//                null,
-//                null,
-//                null,
-//                null
-//        );
 
         Cursor cursor = mDatabase.rawQuery("select * from " + StrongLifeDbSchema.CoursesTable.name +
                 " where " + StrongLifeDbSchema.CoursesTable.Cols.COURSEID + " in " +
@@ -56,7 +47,7 @@ public class ViewMyCourses extends AppCompatActivity {
                 " from " + StrongLifeDbSchema.MyCoursesTable.name + ")", new String[]{});
 
 
-        List<String> classList = new ArrayList<String>();
+        List<SingleCourse> courseList = new ArrayList<SingleCourse>();
 
         try {
             if (cursor.getCount() == 0) {
@@ -64,11 +55,18 @@ public class ViewMyCourses extends AppCompatActivity {
             } else {
                 cursor.moveToFirst();
                 while ( !cursor.isAfterLast()) {
-                    String className = cursor.getString(
+                    String courseTitle = cursor.getString(
                             cursor.getColumnIndex(StrongLifeDbSchema.CoursesTable.Cols.COURSENAME)
                     );
-                    Log.d(VIEWMYCOURSESTAG, className);
-                    classList.add(className);
+
+
+                    Integer courseId = cursor.getInt
+                            (cursor.getColumnIndex(StrongLifeDbSchema.CoursesTable.Cols.COURSEID));
+
+                    SingleCourse singleCourse = new SingleCourse(courseId, courseTitle, new Date(), new Date(), 1);
+
+                    courseList.add(singleCourse);
+
                     cursor.moveToNext();
                 }
             }
@@ -78,7 +76,7 @@ public class ViewMyCourses extends AppCompatActivity {
         }
 
 
-        ViewMyCoursesAdapter mAdapter = new ViewMyCoursesAdapter(classList); // List of info from database
+        ViewMyCoursesAdapter mAdapter = new ViewMyCoursesAdapter(courseList); // List of info from database
         mList.setAdapter(mAdapter);
 
         mBack.setOnClickListener(new View.OnClickListener(){

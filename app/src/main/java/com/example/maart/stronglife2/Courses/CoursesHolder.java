@@ -11,15 +11,17 @@ import android.widget.TextView;
 
 import com.example.maart.stronglife2.R;
 
-public class ViewMyCoursesHolder extends RecyclerView.ViewHolder{
+public class CoursesHolder extends RecyclerView.ViewHolder{
 
     public TextView title;
     public TextView date;
+    public Button signup;
 
-    public ViewMyCoursesHolder(View itemView) {
+    public CoursesHolder(View itemView) {
         super(itemView);
 
         title = (TextView) itemView.findViewById(R.id.title);
         date = (TextView) itemView.findViewById(R.id.date);
+        signup = (Button) itemView.findViewById(R.id.signup);
     }
 }

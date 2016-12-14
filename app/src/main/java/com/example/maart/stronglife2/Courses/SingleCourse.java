@@ -13,11 +13,11 @@ public class SingleCourse {
     private Date mCourseDate;
     private int mUserId;
 
-    public SingleCourse(int courseId, String className, Date time, Date classDate, int userId) {
+    public SingleCourse(int courseId, String courseName, Date time, Date courseDate, int userId) {
         mCourseId = courseId;
-        mCourseName = className;
+        mCourseName = courseName;
         mTime = time;
-        mCourseDate = classDate;
+        mCourseDate = courseDate;
         mUserId = userId;
     }
 

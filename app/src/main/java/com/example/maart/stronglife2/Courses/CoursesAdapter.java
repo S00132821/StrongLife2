@@ -20,7 +20,7 @@ import java.util.Date;
 import java.util.List;
 
 
-public class CoursesAdapter extends RecyclerView.Adapter<ViewMyCoursesHolder> {
+public class CoursesAdapter extends RecyclerView.Adapter<CoursesHolder> {
 
     private List<SingleCourse> mList;
     Context mContext;
@@ -31,15 +31,15 @@ public class CoursesAdapter extends RecyclerView.Adapter<ViewMyCoursesHolder> {
     }
 
     @Override
-    public ViewMyCoursesHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CoursesHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.list_item_courses, parent, false);
 
-        return new ViewMyCoursesHolder(view);
+        return new CoursesHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ViewMyCoursesHolder holder, int position) {
+    public void onBindViewHolder(CoursesHolder holder, int position) {
         final SingleCourse singleCourse = mList.get(position);
 
         holder.title.setText(singleCourse.getmCourseName());

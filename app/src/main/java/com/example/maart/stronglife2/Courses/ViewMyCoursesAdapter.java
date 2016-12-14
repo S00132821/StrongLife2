@@ -5,7 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.maart.stronglife2.Constants;
 import com.example.maart.stronglife2.R;
+
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,9 +17,9 @@ import java.util.List;
 
 public class ViewMyCoursesAdapter extends RecyclerView.Adapter<ViewMyCoursesHolder> {
 
-        private List<String> mList;
+        private List<SingleCourse> mList;
 
-        public ViewMyCoursesAdapter(List<String> list) {
+        public ViewMyCoursesAdapter(List<SingleCourse> list) {
             mList = list;
         }
 
@@ -30,9 +33,13 @@ public class ViewMyCoursesAdapter extends RecyclerView.Adapter<ViewMyCoursesHold
 
         @Override
         public void onBindViewHolder(ViewMyCoursesHolder holder, int position) {
-            String className = mList.get(position);
+            SingleCourse course = mList.get(position);
+            String courseName = course.getmCourseName();
+            Date courseDateRaw = course.getmCourseDate();
+            String courseDate = Constants.dateFormat.format(courseDateRaw);
 
-            holder.title.setText(className);
+            holder.title.setText(courseName);
+            holder.date.setText(courseDate);
         }
 
         @Override
